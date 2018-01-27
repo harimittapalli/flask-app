@@ -1,0 +1,73 @@
+
+{% extends 'search.html' %}
+
+{% block body %}
+<h3> Enter Host Name</h3>
+<form method="POST" action="res">
+    <div classs="form-group">
+        <input type="text" name="hostname">
+        <input class="btn btn-primary" type="submit" value="Search">
+    </div>
+
+</form>
+<br>
+
+<div>
+    <h4>Nagios Details:</h4>
+    <div class="table-responsive">
+    {% if nag_name|length %}
+    <table class="table table-bordered table-hover table-sm table-dark" >
+        <thead  bgcolor="silver">
+        <tr><th scope="col" >Host name</th><th scope="col">IP Address</th><th scope="col">State</th><th scope="col">Status Info</th></tr>
+        </thead>
+        {% for n in range(0, nag_name|length) %}
+
+        <tr scope="row"><td>{{ nag_name[n] }}</td><td>{{ nag_ip[n] }}</td>{% if  nag_state[n] == '0' %}<td bgcolor="lime"><b>UP</b></td>{% elif nag_state[n] == '1' %}<td bgcolor="red"><b>DOWN</b></td>{% else %}<td bgcolor="yellow"><b>UNREACHABLE</b></td>{% endif%}
+            <td>{{ nag_info[n] }}</td></tr>
+
+       {% endfor %}
+    </table>
+    {% else %}
+    <h5>host not found in Nagios</h5></div>
+    {% endif%}
+</div>
+
+    <div class="table-responsive">
+    <h4> Service Now Details:</h4>
+    {% if host_name|length %}
+    <table class="table table-bordered table-hover table-sm table-dark" >
+        <thead class="thead-inverse" bgcolor="silver">
+        <tr><th scope="col" >Host name</th><th scope="col">IP Address</th><th scope="col">Location</th><th>Class</th><th scope="col">Managed By</th><th>Install Status</th></tr>
+        </thead>
+        {% for n in range(0, host_name|length) %}
+
+        <tr scope="row"><td><a href="https://infaprod.service-now.com/cmdb_ci.do?sys_id={{host_id[n]}}"><u><strong>{{ host_name[n] }}</strong></u></a></td><td>{{ ip[n] }}</td><td>{{ loc[n] }}</td><td>{{ class_name[n] }}</td><td>{{ manage[n] }}</td><td>{{install_status[n]}}</td></tr>
+
+       {% endfor %}
+    </table>
+    {% else %}
+        <h5>Host Not found in Service NOW</h5></div>
+    {% endif%}
+
+
+<div>
+    <h4>Related incidents:</h4>
+    {% if number|length %}
+    <table class="table table-bordered table-hover table-sm table-dark" >
+        <thead class="thead-inverse" bgcolor="silver">
+        <tr><th scope="col" >Incident</th><th scope="col">Description</th><th scope="col">State</th><th scope="col">Assigned Group</th><th scope="col">Work Notes</th></tr>
+        </thead>
+        {% for n in range(0, number|length) %}
+
+    <tr scope="row"><td><a href="https://infaprod.service-now.com/incident.do?sys_id={{inc_id[n]}}"><u><strong>{{ number[n] }}</strong> </u></a></td><td>{{ desc[n] }}</td><td>{{ state[n] }}</td><td>{{ assigned_team[n] }}</td><td>{{ work_notes[n] }}</tr>
+
+       {% endfor %}
+    </table>
+
+    {% else %}
+
+<h5>No related incidents found</h5></div>
+{% endif%}
+
+{% endblock %}
+

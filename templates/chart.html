@@ -1,0 +1,81 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<div class="container">
+<table>
+    <TH>Domain Controllers</TH><TH>Live Chart2</TH>
+    <tr>
+    <td><div><canvas id="chart" width="350" height="300" align="right"></canvas></div></td>
+    <td><div><canvas id="chart2" width="350" height="300" align="right"></canvas></div></td>
+
+    </tr>
+</table>
+
+<script>
+   var pieData =
+            [
+            {% for item,label,colors in set %}
+                {
+                    value: {{item}},
+                    label: "{{label}}",
+                    color : "{{colors}}"
+                },
+                {% endfor %}
+         ];
+    var pieOptions = {
+    legend: {
+    display: true,
+    position: "bottom"
+    },
+    responsive: true,
+    title : "Devops",
+	segmentShowStroke : false,
+	animateScale : true
+
+}
+
+   // get bar chart canvas
+   var mychart = document.getElementById("chart").getContext("2d");
+
+   steps = 10
+   max = 10
+   // draw pie chart
+   new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData, pieOptions);
+
+
+</script>
+
+
+<script>
+    var title = {text: "Charts"}
+
+   var pieData = [
+
+            {% for item,label,colors in set2 %}
+                {
+                    value: {{item}},
+                    label: "{{label}}",
+                    color : "{{colors}}"
+
+                },
+
+                {% endfor %}
+
+         ];
+    var pieOptions = {
+	segmentShowStroke : false,
+	animateScale : true
+
+}
+   // get bar chart canvas
+   var mychart2 = document.getElementById("chart2").getContext("2d");
+
+   steps = 10
+   max = 10
+   // draw pie chart
+   new Chart(document.getElementById("chart2").getContext("2d")).Pie(pieData, pieOptions);
+
+</script>
+    </div>
+{% endblock %}
