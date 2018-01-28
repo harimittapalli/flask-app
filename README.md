@@ -1,2 +1,6 @@
 # flask-app
-Flask Web app to integrate Service now and Nagios. It will display the matching hosts&amp; incidents of the searched string
+This Web Application built using Python Flask Frame work and is used for:
+
+search hosts details in nagios and snow and related active incidents
+
+I have used Nagios and SNOW REST API to fetch the data about the hosts.
