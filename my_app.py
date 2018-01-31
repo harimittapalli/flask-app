@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from snow import status, status_ip, rel_incidents, nagios_stat, nagios_stat_ip, dboard
+from snow import status, status_ip, rel_incidents, nagios_stat, nagios_stat_ip
 import os,re
 
 app = Flask(__name__)
@@ -14,11 +14,7 @@ def incidents():
 
 @app.route("/dashboard")
 def dashboard():
-    values=dboard()
-    labels = ["OK", "WARNING", "CRIT", "UNKNOWN", "PENDING"]
-    colors = ["#008000", "#FFFF00", "#800000", "#FFA500", "#808080"]
-    return render_template('chart.html', set=zip(values, labels, colors), set2=zip(values, labels, colors))
-    #return render_template('dashboard2.html', set=zip(values, labels, colors))
+    return render_template('dashboard2.html')
 
 @app.route("/about")
 def about():
