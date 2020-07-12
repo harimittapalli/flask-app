@@ -63,3 +63,4 @@ def rel_incidents(sys_id):
 #it is yet to be implemented.
 #the idea is to display Pie charts or bar charts based on thehost group in nagios.
 #will implent this soon.
+#adding a test comment
